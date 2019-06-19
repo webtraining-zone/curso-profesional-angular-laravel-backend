@@ -28,7 +28,7 @@ class CreateProjectsTable extends Migration
 
         Schema::create('project_translations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('project_id')->unsigned();
+            $table->bigInteger('project_id')->unsigned();
             $table->string('locale')->index();
 
             $table->string('title');
