@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -115,15 +116,28 @@ class ProjectsController extends Controller
     }
 
     // API methods
+    public function getAll(Request $request)
+    {
+        if ($request->isJson()) {
+            return Project::all();
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401, []);
+        }
+    }
+
     public function getProjectBySlug(Request $request, Project $project)
     {
-        $locale = $request->header('x-api-locale');
-        if ($locale !== NULL) {
-            // If $locale is something doesn't exist we will return the default locale
-            return $project->translate($locale, true);
+        if ($request->isJson()) {
+            $locale = $request->header('x-api-locale');
+            if ($locale !== NULL) {
+                // If $locale is something doesn't exist we will return the default locale
+                return $project->translate($locale, true);
+            }
+            // Else just return all the translations
+            return $project;
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401, []);
         }
-        // Else just return all the translations
-        return $project;
     }
 
     public function createProject(Request $request)
@@ -188,6 +202,21 @@ class ProjectsController extends Controller
             $project = Project::create($dataToBeSaved);
 
             return response()->json($project, 201);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401, []);
+        }
+    }
+
+    public function deleteProject(Request $request, $id)
+    {
+        if ($request->isJson()) {
+            try {
+                $project = Project::findOrFail($id);
+                $project->delete();
+                return response()->json($project, 200);
+            } catch (ModelNotFoundException $e) {
+                return response()->json(['error' => 'No content'], 406);
+            }
         } else {
             return response()->json(['error' => 'Unauthorized'], 401, []);
         }
