@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Astrotomic\Translatable\TranslatableServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 
