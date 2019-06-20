@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "astrotomic/laravel-translatable": "^11.0",
+        "barryvdh/laravel-cors": "^0.11.3",
         "cviebrock/eloquent-sluggable": "^4.8",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
