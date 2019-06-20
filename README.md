@@ -25,7 +25,7 @@ XAMPP con PHP 7.1 (recomendado). Esto te instalará MySQL, PHPMyAdmin, Apache y 
 3) Algo que recomendamos es instalar un cliente para probar todos tus *end-points*. 
 Nuestra herramienta favorita para tal propósito es [Postman](https://www.getpostman.com/) que tiene una
 aplicación gratuita para Windows, GNU/Linux y OS X. Después de instalar Postman puedes **importar** una colección
-de *end-points* que hemos creado para ti y que está disponible en: `<REPO>/webtraining/Project Manager API.postman_collection`.
+de *end-points* que hemos creado para ti y que está disponible en: `<REPO>/webtraining/Projects Funding API.postman_collection.json`.
 
 Una vez importada tu colección tendrás acceso a todos los servicios de Lumen como en la siguiente imagen:
 
@@ -40,7 +40,7 @@ composer install
 ```
 2) Configurar base de datos:
 
-Para tu comodidad hemos creado un *MySQL dump* en este archivo `<REPO>/database/sql/project_manager_db_lumen.sql`.
+Para tu comodidad hemos creado un *MySQL dump* en este archivo `<REPO>/database/sql/laravel_funding_db.sql`.
 Este archivo contiene dos usuarios, un proyecto y una tarea de demostración.
 
 2.1) Importa esta base de datos usando algún cliente web como PHPMyAdmin o Sequel Pro.
