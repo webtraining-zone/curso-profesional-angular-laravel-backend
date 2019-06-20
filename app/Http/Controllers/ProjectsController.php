@@ -112,4 +112,10 @@ class ProjectsController extends Controller
     {
         //
     }
+
+    // API methods
+    public function getProjectBySlug()
+    {
+
+    }
 }
