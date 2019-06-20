@@ -141,6 +141,27 @@ class ProjectsController extends Controller
         }
     }
 
+    public function getProjectById(Request $request, $id)
+    {
+        if ($request->isJson()) {
+            try {
+                $project = Project::findOrFail($id);
+                $locale = $request->header('x-api-locale');
+                if ($locale !== NULL) {
+                    // If $locale is something doesn't exist we will return the default locale
+                    return $project->translate($locale, true);
+                }
+
+                // Else just return all the translations
+                return $project;
+            } catch (ModelNotFoundException $e) {
+                return response()->json(['error' => 'No content'], 406);
+            }
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401, []);
+        }
+    }
+
     public function createProject(Request $request)
     {
         if ($request->isJson()) {

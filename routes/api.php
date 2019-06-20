@@ -27,8 +27,8 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'v1'], function () {
 Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
 
     Route::get('/projects', 'ProjectsController@getAll');
+//    Route::get('/projects/{id}', 'ProjectsController@getProjectById');
     Route::get('/projects/{project}', 'ProjectsController@getProjectBySlug');
-
 
     // Auth
     Route::post('/auth/login', 'TokensController@login');
