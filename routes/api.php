@@ -17,6 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'v1'], function () {
+
+    Route::get('/projects/user', 'ProjectsController@getCurrentUserProjects');
+    Route::post('/projects', 'ProjectsController@createProject');
+    Route::delete('/projects/{id}', 'ProjectsController@deleteProject');
+});
+
 Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
 
     Route::get('/projects', 'ProjectsController@getAll');
@@ -27,15 +34,6 @@ Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
     Route::post('/auth/login', 'TokensController@login');
     Route::post('/auth/refresh', 'TokensController@refreshToken');
     Route::get('/auth/expire', 'TokensController@expireToken');
-});
-
-//});
-
-Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'v1'], function () {
-
-    Route::post('/projects', 'ProjectsController@createProject');
-    Route::delete('/projects/{id}', 'ProjectsController@deleteProject');
-
 });
 
 

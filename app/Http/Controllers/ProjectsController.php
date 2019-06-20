@@ -6,6 +6,7 @@ use App\Project;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectsController extends Controller
 {
@@ -220,5 +221,13 @@ class ProjectsController extends Controller
         } else {
             return response()->json(['error' => 'Unauthorized'], 401, []);
         }
+    }
+
+    public function getCurrentUserProjects()
+    {
+        $user = Auth::user();
+        $projects = $user->projects()->get();
+
+        return response()->json($projects, 200);
     }
 }
