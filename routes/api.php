@@ -17,6 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/projects', function (Request $request) {
-    return \App\Project::all();
+Route::group(['middleware' => [], 'prefix' => 'v1'], function () {
+
+    Route::get('/projects', function () {
+        return \App\Project::all();
+    });
+
+    Route::get('/projects/{project}', 'ProjectsController@getProjectBySlug');
+
+    Route::post('/projects', 'ProjectsController@createProject');
 });
+
+
+
+
+

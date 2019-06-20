@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -114,8 +115,81 @@ class ProjectsController extends Controller
     }
 
     // API methods
-    public function getProjectBySlug()
+    public function getProjectBySlug(Request $request, Project $project)
     {
+        $locale = $request->header('x-api-locale');
+        if ($locale !== NULL) {
+            // If $locale is something doesn't exist we will return the default locale
+            return $project->translate($locale, true);
+        }
+        // Else just return all the translations
+        return $project;
+    }
 
+    public function createProject(Request $request)
+    {
+        if ($request->isJson()) {
+            $data = $request->json()->all();
+            $userExists = User::where("id", $data['user_id'])->exists();
+
+            if ($userExists === FALSE) {
+                return response()->json(['error' => 'Invalid parameters'], 406);
+            }
+
+            /*
+            This object:
+            {
+                "user_id": 1,
+                "title": "AwesomeInterview!, a complete online workshop for you to be accepted everywhere",
+                "description": "Master the whole interview process to apply to any tech company",
+                "translations": [
+                    {
+                        "locale": "en",
+                        "title": "AwesomeInterview!, a complete online workshop for you to be accepted everywhere",
+                        "description": "Master the whole interview process to apply to any tech company"
+                    },
+                    {
+                        "locale": "es",
+                        "title": "AwesomeInterview!, un taller online para que te acepten en todos lados",
+                        "description": "Conviértete en un profesional de las entrevistas para aplicar en la empresa tecnológica que gustes"
+                    }
+                ]
+            }
+
+            Will be converted to:
+            [
+                'user_id' => 1,
+                'slug' => 'pre-order-awesomeinterview-a-new-course-for-you-to-be-accepted-everywhere',
+                'en' => [
+                    'title' => 'AwesomeInterview!, a complete online workshop for you to be accepted everywhere',
+                    'description' => 'Master the whole interview process to apply to any tech company'
+                ],
+                'es' => [
+                    'title' => 'AwesomeInterview!, un taller online para que te acepten en todos lados',
+                    'description' => 'Conviértete en un profesional de las entrevistas para aplicar en la empresa tecnológica que gustes'
+                ],
+            ];
+            */
+
+            $translations = $data['translations'];
+
+            $dataToBeSaved = [
+                'user_id' => $data['user_id'],
+//              'slug' is automatically set!
+            ];
+
+            foreach ($translations as $translation) {
+                $dataToBeSaved [$translation["locale"]] = [
+                    'title' => $translation["title"],
+                    'description' => $translation["description"],
+                ];
+            }
+
+            $project = Project::create($dataToBeSaved);
+
+            return response()->json($project, 201);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401, []);
+        }
     }
 }
