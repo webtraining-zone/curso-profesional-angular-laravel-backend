@@ -211,6 +211,8 @@ class ProjectsController extends Controller
 
             $dataToBeSaved = [
                 'user_id' => $data['user_id'],
+                'thumbnail' =>  $data['thumbnail'],
+                'image' =>  $data['image'],
 //              'slug' is automatically set!
             ];
 

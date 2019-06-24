@@ -14,11 +14,16 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvYXV0aFwvbG9naW4iLCJpYXQiOjE1NjE0MTE5NjQsImV4cCI6MTU2MTQxNTU2NCwibmJmIjoxNTYxNDExOTY0LCJqdGkiOiJWMXRoejBscVRJRFNydDk0Iiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.QoBHtBd5wBPDYWVwLgSyoys4CCjrnMCVQhJLhl0D5WA",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"user_id\": 1,\n\t\"title\": \"AwesomeInterview!, a complete online workshop for you to be accepted everywhere\",\n\t\"description\": \"Master the whole interview process to apply to any tech company\",\n\t\"translations\": [{\n\t\t\t\"locale\": \"en\",\n\t\t\t\"title\": \"AwesomeInterview!, a complete online workshop for you to be accepted everywhere\",\n\t\t\t\"description\": \"Master the whole interview process to apply to any tech company\"\n\t\t},\n\t\t{\n\t\t\t\"locale\": \"es\",\n\t\t\t\"title\": \"AwesomeInterview!, un taller online para que te acepten en todos lados\",\n\t\t\t\"description\": \"Conviértete en un profesional de las entrevistas para aplicar en la empresa tecnológica que gustes\"\n\t\t}\n\t]\n}"
+					"raw": "{\n\t\"user_id\": 1,\n\t\"title\": \"AwesomeInterview!, a complete online workshop for you to be accepted everywhere\",\n\t\"description\": \"Master the whole interview process to apply to any tech company\",\n\t\"thumbnail\": \"project-1.jpg\",\n\t\"image\": \"project-1.jpg\",\n\t\"translations\": [{\n\t\t\t\"locale\": \"en\",\n\t\t\t\"title\": \"AwesomeInterview!, a complete online workshop for you to be accepted everywhere\",\n\t\t\t\"description\": \"Master the whole interview process to apply to any tech company\"\n\t\t},\n\t\t{\n\t\t\t\"locale\": \"es\",\n\t\t\t\"title\": \"AwesomeInterview!, un taller online para que te acepten en todos lados\",\n\t\t\t\"description\": \"Conviértete en un profesional de las entrevistas para aplicar en la empresa tecnológica que gustes\"\n\t\t}\n\t]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8000/api/v1/projects",
@@ -103,6 +108,46 @@
 			"response": []
 		},
 		{
+			"name": "GET project current user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC92MVwvYXV0aFwvbG9naW4iLCJpYXQiOjE1NjEwMDAxODMsImV4cCI6MTU2MTAwMzc4MywibmJmIjoxNTYxMDAwMTgzLCJqdGkiOiJJSzRuNWg5eDZIODNDZEp5Iiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.lZcCg5AoZFEMbosADwfXymO6YkE1B96YHWhfM7W4dBI",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/projects/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"projects",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "DELETE project by id",
 			"request": {
 				"method": "DELETE",
@@ -125,6 +170,37 @@
 						"v1",
 						"projects",
 						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AUTH login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"email\" : \"esmeralda@webtraining.zone\",\n \"password\" : \"esmeralda\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
 					]
 				}
 			},

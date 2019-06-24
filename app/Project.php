@@ -47,7 +47,7 @@ class Project extends Model
     }
 
     protected $fillable = [
-        'slug', 'user_id'
+        'slug', 'user_id', 'image', 'thumbnail'
     ];
 
 }
