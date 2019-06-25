@@ -35,93 +35,123 @@ Una vez importada tu colección tendrás acceso a todos los servicios de Lumen c
 ## Instalación para Desarrollo
 
 1) Instalar dependencias de Composer (ejecutar desde el directorio raiz de este proyecto).
-```
-composer install
-```
+    ```
+    composer install
+    ```
 2) Configurar base de datos:
 
-Para tu comodidad hemos creado un *MySQL dump* en este archivo `<REPO>/database/sql/laravel_funding_db.sql`.
-Este archivo contiene dos usuarios, un proyecto y una tarea de demostración.
+    Para tu comodidad hemos creado un *MySQL dump* en este archivo `<REPO>/database/sql/laravel_funding_db.sql`.
+    Este archivo contiene dos usuarios, un proyecto y una tarea de demostración.
 
-2.1) Importa esta base de datos usando algún cliente web como PHPMyAdmin o Sequel Pro.
-2.2) Crea un usuario que se pueda conectar a esta base de datos, por ejemplo:
-```
-Base de datos:  laravel_funding_db
-Usuario:        laravel_funding_user
-Constraseña:    D5xNL5LpHPVTxwz4
-```
+    2.1) Importa esta base de datos usando algún cliente web como PHPMyAdmin o Sequel Pro.
+    
+    2.2) Crea un usuario que se pueda conectar a esta base de datos, por ejemplo:
+        
+      ```
+        Base de datos:  laravel_funding_db
+        Usuario:        laravel_funding_user
+        Constraseña:    D5xNL5LpHPVTxwz4
+      ```
 
-2.3) Crea un archivo llamado `.env` en la raíz de este proyecto, con los siguientes datos:
-```
-APP_NAME=Laravel
-APP_ENV=local
-APP_KEY=base64:x0jrh73mp1nSWsXVNBus0NAGhyFw2C6zHlE6WumlyXU=
-APP_DEBUG=true
-APP_URL=http://localhost
+    2.3) Crea un archivo llamado `.env` en la raíz de este proyecto, con los siguientes datos:
+    
+      ```
+        APP_NAME=Laravel
+        APP_ENV=local
+        APP_KEY=base64:x0jrh73mp1nSWsXVNBus0NAGhyFw2C6zHlE6WumlyXU=
+        APP_DEBUG=true
+        APP_URL=http://localhost
+        
+        LOG_CHANNEL=stack
+        
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=laravel_funding_db
+        DB_USERNAME=laravel_funding_user
+        DB_PASSWORD=D5xNL5LpHPVTxwz4
+        
+        BROADCAST_DRIVER=log
+        CACHE_DRIVER=file
+        QUEUE_CONNECTION=sync
+        SESSION_DRIVER=file
+        SESSION_LIFETIME=120
+        
+        REDIS_HOST=127.0.0.1
+        REDIS_PASSWORD=null
+        REDIS_PORT=6379
+        
+        MAIL_DRIVER=smtp
+        MAIL_HOST=smtp.mailtrap.io
+        MAIL_PORT=2525
+        MAIL_USERNAME=null
+        MAIL_PASSWORD=null
+        MAIL_ENCRYPTION=null
+        
+        AWS_ACCESS_KEY_ID=
+        AWS_SECRET_ACCESS_KEY=
+        AWS_DEFAULT_REGION=us-east-1
+        AWS_BUCKET=
+        
+        PUSHER_APP_ID=
+        PUSHER_APP_KEY=
+        PUSHER_APP_SECRET=
+        PUSHER_APP_CLUSTER=mt1
+        
+        MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+        MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+      ```
 
-LOG_CHANNEL=stack
+      Lo importante en este caso son los datos de conexión a la base de datos y la generación de tu `APP_KEY` que puedes 
+      generar usando este [Random Generator](https://webtraining.zone/random-generator).
+       
+      Para crear un usuario en MySQL podemos usar:
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel_funding_db
-DB_USERNAME=laravel_funding_user
-DB_PASSWORD=D5xNL5LpHPVTxwz4
+     ```
+        CREATE USER 'laravel_funding_user'@'localhost' IDENTIFIED BY 'D5xNL5LpHPVTxwz4';
+        GRANT ALL PRIVILEGES ON laravel_funding_db.* TO 'project_mgr_user_lumen'@'localhost';
+        FLUSH PRIVILEGES;
+     ```
 
-BROADCAST_DRIVER=log
-CACHE_DRIVER=file
-QUEUE_CONNECTION=sync
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
+     **Nota para MySQL 8**
 
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
+     Si estás usando MySQL 8, la forma de creación de tu base de datos es como sigue:
 
-MAIL_DRIVER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
+      ```
+       CREATE SCHEMA `laravel_funding_db` DEFAULT CHARACTER SET utf8 ;
+      ```
+    
+  3) Iniciar tu servidor en el puerto 8085
+  
+       ```
+        php artisan serve
+        ```
 
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_DEFAULT_REGION=us-east-1
-AWS_BUCKET=
+  4) Instalar [docker](https://www.docker.com/get-started), una vez que tengas instalado docker vamos a crear 2 contenedores.
 
-PUSHER_APP_ID=
-PUSHER_APP_KEY=
-PUSHER_APP_SECRET=
-PUSHER_APP_CLUSTER=mt1
-
-MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
-MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
-```
-
-Lo importante en este caso son los datos de conexión a la base de datos y la generación de tu `APP_KEY` que puedes 
-generar usando este [Random Generator](https://webtraining.zone/random-generator).
-
-Para crear un usuario en MySQL podemos usar:
-
-```
-CREATE USER 'laravel_funding_user'@'localhost' IDENTIFIED BY 'D5xNL5LpHPVTxwz4';
-GRANT ALL PRIVILEGES ON laravel_funding_db.* TO 'project_mgr_user_lumen'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-**Nota para MySQL 8**
-
-Si estás usando MySQL 8, la forma de creación de tu base de datos es como sigue:
-
-```
-CREATE SCHEMA `laravel_funding_db` DEFAULT CHARACTER SET utf8 ;
-```
-
-3) Iniciar tu servidor en el puerto 8085
-```
-php artisan serve
-```
+     4.1 Crear un contenedor que sera el encargado del almacenamiento de la informacion en Carbon LDP, esto lo hacemos con el siguiente comando: 
+    
+        ```bash
+        docker run -d --name carbonldp-funding -p 8083:8083 \
+        -v [path parent]/carbonldp-funding:/opt/carbonldp/shared \
+        -e "server.exposed.host=localhost" \
+        -e "server.exposed.port=8083" \
+        carbonldp/carbonldp-platform:5 \
+        --carbonldp.contact.first-name="Ezmeralda" \
+        --carbonldp.contact.last-name="Hernandez" \
+        --carbonldp.contact.email="ezmeralda.hernandez@webtrainin.zone" \
+        --carbonldp.contact.company="Webtraining"
+        
+        ```
+    
+     4.2 Crear un contenedor con el workbench de Carbon LDP; Este nos ayudara a visualizar nuestra informacion:
+   
+       ```bash 
+       docker run -d --name carbonldp-workbench-funding -p 8002:80 \
+       -e "CARBONLDP_HOST=localhost:8083" \
+       -e "CARBONLDP_PROTOCOL=http" \
+       carbonldp/carbonldp-workbench:latest
+       ```
 
 ## Preguntas Frecuentes
 
