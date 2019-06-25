@@ -108,6 +108,7 @@ Una vez importada tu colección tendrás acceso a todos los servicios de Lumen c
       Para crear un usuario en MySQL podemos usar:
 
      ```
+        CREATE DATABASE laravel_funding_db;
         CREATE USER 'laravel_funding_user'@'localhost' IDENTIFIED BY 'D5xNL5LpHPVTxwz4';
         GRANT ALL PRIVILEGES ON laravel_funding_db.* TO 'laravel_funding_user'@'localhost';
         FLUSH PRIVILEGES;
