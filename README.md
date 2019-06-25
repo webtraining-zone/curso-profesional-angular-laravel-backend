@@ -43,9 +43,9 @@ Una vez importada tu colección tendrás acceso a todos los servicios de Lumen c
     Para tu comodidad hemos creado un *MySQL dump* en este archivo `<REPO>/database/sql/laravel_funding_db.sql`.
     Este archivo contiene dos usuarios, un proyecto y una tarea de demostración.
 
-    2.1) Importa esta base de datos usando algún cliente web como PHPMyAdmin o Sequel Pro.
+    2.1 Importa esta base de datos usando algún cliente web como PHPMyAdmin o Sequel Pro.
     
-    2.2) Crea un usuario que se pueda conectar a esta base de datos, por ejemplo:
+    2.2 Crea un usuario que se pueda conectar a esta base de datos, por ejemplo:
         
       ```
         Base de datos:  laravel_funding_db
@@ -53,7 +53,7 @@ Una vez importada tu colección tendrás acceso a todos los servicios de Lumen c
         Constraseña:    D5xNL5LpHPVTxwz4
       ```
 
-    2.3) Crea un archivo llamado `.env` en la raíz de este proyecto, con los siguientes datos:
+    2.3 Crea un archivo llamado `.env` en la raíz de este proyecto, con los siguientes datos:
     
       ```
         APP_NAME=Laravel
@@ -109,7 +109,7 @@ Una vez importada tu colección tendrás acceso a todos los servicios de Lumen c
 
      ```
         CREATE USER 'laravel_funding_user'@'localhost' IDENTIFIED BY 'D5xNL5LpHPVTxwz4';
-        GRANT ALL PRIVILEGES ON laravel_funding_db.* TO 'project_mgr_user_lumen'@'localhost';
+        GRANT ALL PRIVILEGES ON laravel_funding_db.* TO 'laravel_funding_user'@'localhost';
         FLUSH PRIVILEGES;
      ```
 
