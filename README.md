@@ -128,32 +128,6 @@ Una vez importada tu colección tendrás acceso a todos los servicios de Lumen c
         php artisan serve
         ```
 
-  4) Instalar [docker](https://www.docker.com/get-started), una vez que tengas instalado docker vamos a crear 2 contenedores.
-
-     4.1 Crear un contenedor que sera el encargado del almacenamiento de la informacion en Carbon LDP, esto lo hacemos con el siguiente comando: 
-    
-        ```bash
-        docker run -d --name carbonldp-funding -p 8083:8083 \
-        -v [path parent]/carbonldp-funding:/opt/carbonldp/shared \
-        -e "server.exposed.host=localhost" \
-        -e "server.exposed.port=8083" \
-        carbonldp/carbonldp-platform:5 \
-        --carbonldp.contact.first-name="Ezmeralda" \
-        --carbonldp.contact.last-name="Hernandez" \
-        --carbonldp.contact.email="ezmeralda.hernandez@webtrainin.zone" \
-        --carbonldp.contact.company="Webtraining"
-        
-        ```
-    
-     4.2 Crear un contenedor con el workbench de Carbon LDP; Este nos ayudara a visualizar nuestra informacion:
-   
-       ```bash 
-       docker run -d --name carbonldp-workbench-funding -p 8002:80 \
-       -e "CARBONLDP_HOST=localhost:8083" \
-       -e "CARBONLDP_PROTOCOL=http" \
-       carbonldp/carbonldp-workbench:latest
-       ```
-
 ## Preguntas Frecuentes
 
 **¿Por qué cuando visito un *end-point*, por ejemplo `/api/v1/projects` veo un código JSON de "Unauthorized"?**
